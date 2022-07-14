@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/bengunton/GoodDay/twitter"
+)
 
 func main() {
-	fmt.Println("vim-go")
+	t := twitter.CreateFetcher("blah")
+	fmt.Println(t.GetGoodDay())
 }
