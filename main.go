@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	t := twitter.CreateFetcher("blah")
+	t := twitter.CreateFetcher()
 	fmt.Println(t.GetGoodDay())
 }

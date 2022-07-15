@@ -1,6 +1,8 @@
 package twitter
 
 import (
+	"os"
+
 	"github.com/bengunton/GoodDay/models"
 )
 
@@ -8,7 +10,8 @@ type TweetFetcher struct {
 	apiKey string
 }
 
-func CreateFetcher(key string) models.Fetcher {
+func CreateFetcher() models.Fetcher {
+	key := os.Getenv("BearerToken")
 	return TweetFetcher{apiKey: key}
 }
 
