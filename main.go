@@ -8,5 +8,6 @@ import (
 
 func main() {
 	t := twitter.CreateFetcher()
+	fmt.Println("It's a good day to...")
 	fmt.Println(t.GetGoodDay())
 }

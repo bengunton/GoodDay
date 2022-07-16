@@ -43,7 +43,7 @@ func (t TweetFetcher) GetGoodDay() string {
 func (t *TweetFetcher) makeRequest() (*http.Response, error) {
 	client := &http.Client{}
 
-	url := `https://api.twitter.com/2/tweets/search/recent?query="it's%20a%20good%20day%20to"&tweet.fields=created_at&max_results=10`
+	url := `https://api.twitter.com/2/tweets/search/recent?query="it's%20a%20good%20day%20to"&tweet.fields=created_at`
 	req, err := http.NewRequest("GET", url, nil)
 
 	if err != nil {
@@ -83,6 +83,6 @@ func parseTweets(body *io.ReadCloser) []tweet {
 func (t tweet) getGoodDay() (string, bool) {
 	content := t.Text
 
-	_, after, found := strings.Cut(content, "It's a good day to")
+	_, after, found := strings.Cut(content, "It's a good day to ")
 	return after, found
 }
