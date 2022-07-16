@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
+	"strings"
 
 	"github.com/bengunton/GoodDay/models"
 )
@@ -30,8 +30,14 @@ func (t TweetFetcher) GetGoodDay() string {
 
 	tweets := parseTweets(&resp.Body)
 
-	reply := "got " + strconv.Itoa(len(tweets)) + " tweets"
-	return reply
+	for i := 0; i < len(tweets); i++ {
+		goodDay, success := tweets[i].getGoodDay()
+		if success {
+			return goodDay
+		}
+	}
+
+	return "fail to find any tweets :("
 }
 
 func (t *TweetFetcher) makeRequest() (*http.Response, error) {
@@ -65,10 +71,18 @@ func parseTweets(body *io.ReadCloser) []tweet {
 	err := decoder.Decode(&response)
 	if err != nil {
 		log.Print(err)
+		log.Print(response)
 		return nil
 	}
 
 	tweets := make([]tweet, len(response.Data))
 	copy(tweets, response.Data)
 	return tweets
+}
+
+func (t tweet) getGoodDay() (string, bool) {
+	content := t.Text
+
+	_, after, found := strings.Cut(content, "It's a good day to")
+	return after, found
 }
