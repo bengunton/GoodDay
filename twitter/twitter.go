@@ -43,7 +43,7 @@ func (t TweetFetcher) GetGoodDay() string {
 func (t *TweetFetcher) makeRequest() (*http.Response, error) {
 	client := &http.Client{}
 
-	url := `https://api.twitter.com/2/tweets/search/recent?query="it's%20a%20good%20day%20to"&tweet.fields=created_at`
+	url := `https://api.twitter.com/2/tweets/search/recent?query="it's%20a%20good%20day%20to"-is:retweet&tweet.fields=created_at`
 	req, err := http.NewRequest("GET", url, nil)
 
 	if err != nil {
