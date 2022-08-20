@@ -83,6 +83,10 @@ func parseTweets(body *io.ReadCloser) []tweet {
 func (t tweet) getGoodDay() (string, bool) {
 	content := t.Text
 
-	_, after, found := strings.Cut(content, "It's a good day to ")
+	_, after, found := strings.Cut(content, "It’s a good day to ")
+	if !found {
+		_, after, found = strings.Cut(content, "It's a good day to ")
+	}
+
 	return after, found
 }
