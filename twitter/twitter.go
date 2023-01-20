@@ -24,7 +24,7 @@ func (t TweetFetcher) GetGoodDay() string {
 
 	resp, err := t.makeRequest()
 	if err != nil {
-		log.Print(err)
+		log.Println(err)
 		return "failed"
 	}
 
@@ -47,7 +47,7 @@ func (t *TweetFetcher) makeRequest() (*http.Response, error) {
 	req, err := http.NewRequest("GET", url, nil)
 
 	if err != nil {
-		log.Print("Failed to create request")
+		log.Println("Failed to create request")
 		return nil, err
 	}
 
@@ -55,7 +55,7 @@ func (t *TweetFetcher) makeRequest() (*http.Response, error) {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Print("Failed to send request")
+		log.Println("Failed to send request")
 		return nil, err
 	}
 
@@ -64,14 +64,14 @@ func (t *TweetFetcher) makeRequest() (*http.Response, error) {
 
 func parseTweets(body *io.ReadCloser) []tweet {
 	decoder := json.NewDecoder(*body)
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 
 	var response twitterResponse
 
 	err := decoder.Decode(&response)
 	if err != nil {
-		log.Print(err)
-		log.Print(response)
+		log.Println(err)
+		log.Println(response)
 		return nil
 	}
 
