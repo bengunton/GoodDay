@@ -22,13 +22,20 @@ func CreateFetcher() models.Fetcher {
 
 func (t TweetFetcher) GetGoodDay() string {
 
+	log.Println("Requesting...")
+
 	resp, err := t.makeRequest()
 	if err != nil {
 		log.Println(err)
 		return "failed"
 	}
 
+	log.Println(resp)
+	log.Println("Parsing...")
+
 	tweets := parseTweets(&resp.Body)
+
+	log.Println(tweets)
 
 	for i := 0; i < len(tweets); i++ {
 		goodDay, success := tweets[i].getGoodDay()

@@ -1,21 +1,29 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	"log"
 	"os"
 
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/bengunton/GoodDay/twitter"
 )
 
+type MyEvent struct {
+}
+
+func HandleRequest(ctx context.Context, event MyEvent) (string, error) {
+	return GetContents(), nil
+}
+
 func main() {
+	lambda.Start(HandleRequest)
+}
+
+func GetContents() string {
 	t := twitter.CreateFetcher()
-	fmt.Println("It's a good day to...")
-
-	goodDay := t.GetGoodDay()
-	fmt.Println(goodDay)
-
-	WriteToFile(goodDay)
+	log.Print("Test")
+	return "It's a good day to...\n" + t.GetGoodDay()
 }
 
 func WriteToFile(contents string) {
