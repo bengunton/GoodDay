@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"os"
 
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/bengunton/GoodDay/models"
 	"github.com/bengunton/GoodDay/twitter"
 )
 
@@ -23,7 +25,10 @@ func main() {
 func GetContents() string {
 	t := twitter.CreateFetcher()
 	log.Print("Test")
-	return "It's a good day to...\n" + t.GetGoodDay()
+
+	resp := models.Response{"It's a good day to...\n" + t.GetGoodDay()}
+	mapResp, _ := json.Marshal(resp)
+	return string(mapResp)
 }
 
 func WriteToFile(contents string) {
